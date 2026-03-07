@@ -13,7 +13,7 @@ const VALUES = [
 const DOCTORS = [
     {
         name: 'Dr. Nikhil Khandare',
-        role: 'General & Cosmetic Dentistry',
+        role: 'BDS, MDS - Pediatric Dentist',
         image: img('images/dr-nikhil.jpg'),
         bio: 'Dr. Nikhil Khandare is the lead dentist at My Dental Story and is widely known for his gentle, patient-first approach. He is especially praised for his ability to make children feel at ease — engaging them in friendly conversation and familiarizing them with equipment so they never feel anxious. Patients frequently note that even complex procedures like root canals feel surprisingly comfortable under his care.',
         qualifications: ['BDS — Dental Surgery', 'Specialized Training in Dental Implants', 'Best Dentist in Pimple Saudagar'],
@@ -23,12 +23,11 @@ const DOCTORS = [
     },
     {
         name: 'Dr. Vaidehi Khandare',
-        role: 'Orthodontics & Preventive Care',
         image: img('images/dr-vaidehi.jpg'),
         bio: 'Dr. Vaidehi Khandare brings warmth and precision to orthodontics and preventive dental care. She is passionate about guiding patients toward long-term oral health through education, early intervention, and personalized care plans for the entire family.',
         qualifications: ['BDS — Dental Surgery', 'Training in Orthodontics & Aligners', 'Preventive Dentistry Specialist'],
         specializations: ['Clear Aligners', 'Traditional Braces', 'Preventive Care', 'Gum Health'],
-        experience: '8+ years',
+        experience: '10+ years',
         tagline: '"Prevention today means a brighter smile tomorrow."',
     },
 ];

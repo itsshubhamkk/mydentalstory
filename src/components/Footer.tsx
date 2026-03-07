@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Clock, Mail, MessageCircle } from 'lucide-react';
+import { Phone, MapPin, Clock, Mail, MessageCircle, Linkedin } from 'lucide-react';
 
 const YEAR = new Date().getFullYear();
 const WA = '917972752597';
@@ -11,6 +11,20 @@ const LINKS = [
     { label: 'Contact', to: '/contact' },
 ];
 
+const LinkedInIcon = ({ size = 14, ...props }) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        {...props}
+    >
+        <path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5V5c0-2.761-2.238-5-5-5zM6 19H3v-9h3v9zM4.5 9.731C3.534 9.731 2.75 8.941 2.75 7.97S3.534 6.209 4.5 6.209s1.75.79 1.75 1.761-.783 1.761-1.75 1.761zM22 19h-3v-4.5c0-1.07-.02-2.444-1.488-2.444-1.488 0-1.716 1.162-1.716 2.372V19h-3v-9h2.881v1.231h.041c.401-.76 1.379-1.562 2.838-1.562C20.036 9.669 21 11.666 21 14.259V19z" />
+    </svg>
+);
+
 export default function Footer() {
     return (
         <footer style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', color: 'var(--text)' }}>
@@ -19,7 +33,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="lg:col-span-2">
                         <div className="flex items-center gap-2 mb-4">
-                            <img src="/images/logo.png" alt="MyDentalStory" className="w-7 h-7 flex-shrink-0 object-contain drop-shadow-sm" />
+                            <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="MyDentalStory" className="w-7 h-7 flex-shrink-0 object-contain drop-shadow-sm" />
                             <span className="font-bold text-base uppercase tracking-[0.14em]" style={{ fontFamily: "'Inter', sans-serif" }}>MyDentalStory</span>
                         </div>
                         <p className="text-sm leading-relaxed max-w-xs" style={{ color: 'var(--text-2)' }}>
@@ -86,12 +100,48 @@ export default function Footer() {
             {/* Bottom bar */}
             <div className="py-5 px-4" style={{ borderTop: '1px solid var(--border)' }}>
                 <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <p className="text-xs" style={{ color: 'var(--text-3)' }}>© {YEAR} MyDentalStory. All rights reserved.</p>
+
+                    <p className="text-xs" style={{ color: 'var(--text-3)' }}>
+                        © {YEAR} MyDentalStory. All rights reserved.
+                    </p>
+
                     <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
-                        <p className="text-xs" style={{ color: 'var(--text-3)' }}>Gentle care · Beautiful smiles · Pimple Saudagar, Pune</p>
-                        <p className="text-xs flex items-center gap-1" style={{ color: 'var(--text-2)' }}>
-                            Made with <span style={{ color: '#E91E63' }}>❤️</span> by Shubh
+
+                        <p className="text-xs" style={{ color: 'var(--text-3)' }}>
+                            Gentle care · Beautiful smiles · Pimple Saudagar, Pune
                         </p>
+
+                        <div className="flex items-center gap-4">
+
+                            {/* Made with ❤️ by Shubh (WhatsApp linked) */}
+                            <a
+                                href="https://wa.me/917219725094"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs flex items-center gap-1"
+                                style={{ color: 'var(--text-2)' }}
+                            >
+                                Made with <span style={{ color: '#E91E63' }}>❤️</span> by Shubh
+                            </a>
+                            {/* Email */}
+                            <a
+                                href="mailto:shubhamkhodke558@gmail.com"
+                                aria-label="Email"
+                                className="flex items-center"
+                                style={{ color: 'var(--text-2)' }}
+                            >
+                                <Mail size={14} />
+                            </a>
+                            {/* Phone */}
+                            <a
+                                href="tel:+917219725094"
+                                aria-label="Call"
+                                className="flex items-center"
+                                style={{ color: 'var(--text-2)' }}
+                            >
+                                <Phone size={14} />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
