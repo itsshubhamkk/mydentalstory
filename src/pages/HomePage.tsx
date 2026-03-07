@@ -1,41 +1,69 @@
 import { useEffect, useRef } from 'react';
 import {
-    Phone, MapPin, Clock, Calendar, MessageCircle,
-    Shield, Sparkles, Stethoscope, AlignCenter,
-    Heart, Monitor, Wallet, Star, ChevronRight, CheckCircle
+    Calendar, MessageCircle, ChevronRight, Star,
+    Shield, Sparkles, Stethoscope, AlignCenter, Heart, Monitor, Wallet
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { img } from '../utils/images';
 
-const WHATSAPP = '919876543210';
+const WA = '917972752597';
+const wa = () => `https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`;
 
 const SERVICES = [
-    { icon: Shield, title: 'Preventive Care', desc: 'Cleanings, exams, and personalized hygiene plans to keep your smile healthy.' },
-    { icon: Sparkles, title: 'Cosmetic Dentistry', desc: 'Whitening, veneers, and smile design for a confident, radiant smile.' },
+    { icon: Shield, title: 'Preventive Care', desc: 'Cleanings, exams, and hygiene plans to keep your smile healthy long-term.' },
+    { icon: Sparkles, title: 'Cosmetic Dentistry', desc: 'Whitening, veneers, and smile design for a radiant, confident smile.' },
     { icon: Stethoscope, title: 'Restorative Work', desc: 'Fillings, crowns, bridges, and implants to restore your dental health.' },
     { icon: AlignCenter, title: 'Orthodontics', desc: 'Clear aligners and braces for all ages to achieve perfect alignment.' },
 ];
-
 const WHY = [
-    { icon: Heart, title: 'Gentle Techniques', desc: 'We prioritize comfort at every step of your treatment journey.' },
-    { icon: Monitor, title: 'Modern Technology', desc: 'Digital X-rays, 3D imaging, and same-day crowns.' },
-    { icon: Wallet, title: 'Transparent Pricing', desc: 'Clear estimates upfront — no surprise bills, ever.' },
-    { icon: Calendar, title: 'Flexible Scheduling', desc: 'Early, late, and weekend appointment slots available.' },
+    { icon: Heart, title: 'Gentle & Painless', desc: 'Procedures are surprisingly comfortable — even kids feel at ease.' },
+    { icon: Monitor, title: 'Modern Technology', desc: 'Digital X-rays, 3D imaging, same-day results.' },
+    { icon: Wallet, title: 'Transparent Pricing', desc: 'Clear estimates upfront — no hidden fees ever.' },
+    { icon: Calendar, title: 'Flexible Hours', desc: 'Open 9AM–9:30PM every day including Sunday.' },
 ];
-
 const TESTIMONIALS = [
-    { quote: 'The team made me feel safe even during a root canal. Truly the best dental experience I\'ve had.', name: 'Ananya R.', role: 'Patient since 2021', rating: 5 },
-    { quote: 'My kids actually look forward to checkups here. The staff is amazing with children!', name: 'Marcus T.', role: 'Family Patient', rating: 5 },
-    { quote: 'Finally, a dentist who explains everything clearly. No more dental anxiety for me!', name: 'Sofia L.', role: 'Patient since 2022', rating: 5 },
-    { quote: 'Incredible experience — from booking to the final result. My smile has never looked better!', name: 'Rahul M.', role: 'Cosmetic Patient', rating: 5 },
-    { quote: 'Professional, caring, and efficient. The Invisalign treatment was worth every rupee.', name: 'Preethi K.', role: 'Orthodontic Patient', rating: 5 },
-    { quote: 'State-of-the-art clinic with a warm, welcoming team. I recommend them to everyone.', name: 'Vikram S.', role: 'Implant Patient', rating: 5 },
+    {
+        quote: 'I wanted to express my gratitude for the wonderful care my 6-year-old daughter received during her root canal. The doctor made it remarkably smooth — she did not feel any pain at all.',
+        name: 'Deepali Naidu',
+        role: 'Parent, Patient',
+        rating: 5
+    },
+    {
+        quote: 'Very good service and very co-operative. Good staff and doctor. Highly recommend to everyone!',
+        name: 'Rahul M.',
+        role: 'Patient',
+        rating: 5
+    },
+    {
+        quote: 'Clinic location is easily accessible. Good place to get your regular dental checks. The team is very professional.',
+        name: 'Priya S.',
+        role: 'Regular Patient',
+        rating: 5
+    },
+    {
+        quote: 'The team made me feel safe even during a root canal. Truly the best dental experience I\'ve ever had.',
+        name: 'Ananya R.',
+        role: 'Patient since 2021',
+        rating: 5
+    },
+    {
+        quote: 'Dr. Nikhil is very kind with kids. My children actually look forward to their check-ups here!',
+        name: 'Vikram S.',
+        role: 'Family Patient',
+        rating: 5
+    },
+    {
+        quote: 'Professional, caring, and efficient. Transparent pricing and no hidden fees whatsoever.',
+        name: 'Sneha P.',
+        role: 'Patient since 2022',
+        rating: 5
+    },
 ];
-
 const STATS = [
     { value: '5,000+', label: 'Happy Patients' },
-    { value: '12+', label: 'Years Experience' },
-    { value: '15+', label: 'Services Offered' },
-    { value: '4.9★', label: 'Google Rating' },
+    { value: '12+', label: 'Years of Care' },
+    { value: '15+', label: 'Treatments Offered' },
+    { value: '4.9★', label: 'Google Rating (99 reviews)' },
 ];
 
 function useReveal() {
@@ -43,281 +71,296 @@ function useReveal() {
     useEffect(() => {
         const el = ref.current;
         if (!el) return;
-        const obs = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) { el.classList.add('is-visible'); obs.unobserve(el); } },
-            { threshold: 0.12 }
-        );
+        const obs = new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) { el.classList.add('visible'); obs.unobserve(el); }
+        }, { threshold: 0.1 });
         obs.observe(el);
         return () => obs.disconnect();
     }, []);
     return ref;
 }
 
-function RevealSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function Reveal({ children, className = '' }: { children: React.ReactNode; className?: string }) {
     const ref = useReveal();
     return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
 }
 
-interface HomePageProps {
-    onBooking: () => void;
-}
-
-export default function HomePage({ onBooking }: HomePageProps) {
-    const waLink = (msg?: string) =>
-        `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg || "Hi, I'd like to book a dental appointment")}`;
-
+export default function HomePage({ onBooking }: { onBooking: () => void }) {
     return (
-        <div className="min-h-screen bg-[#f6f8fa]">
+        <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
             <div className="grain-overlay" />
 
-            {/* ─── HERO ─────────────────────────────────────────────── */}
-            <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="/images/hero-clinic.jpg"
-                        alt="MyDentalStory Dental Clinic modern interior"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/55 to-[#f6f8fa]/95" />
+            {/* ═══════════════════════════════════════════
+          HERO — Split Layout with Real Image
+          ═══════════════════════════════════════════ */}
+            <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-20" style={{ background: 'var(--bg)' }}>
+                {/* Background Image Layer */}
+                <div className="absolute inset-0 z-0 flex justify-end">
+                    <div className="w-full lg:w-3/4 h-full relative">
+                        <img src={img('images/clinic/main-working-area.png')} alt="MyDentalStory Clinic - Main Working Area" className="w-full h-full object-cover object-[center_35%]" />
+                        {/* Gradients to fade image into the background color (left and bottom) */}
+                        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, var(--bg) 0%, rgba(253,251,247,0.85) 20%, rgba(253,251,247,0) 60%)' }} />
+                        <div className="absolute inset-0 block lg:hidden" style={{ background: 'linear-gradient(to bottom, var(--bg) 0%, rgba(253,251,247,0.85) 45%, rgba(253,251,247,0) 100%)' }} />
+                        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, var(--bg) 0%, transparent 15%)' }} />
+                    </div>
                 </div>
 
-                <div className="relative z-10 text-center px-4 pt-24 max-w-4xl mx-auto">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-600/10 border border-teal-600/20 mb-6 animate-fade-in">
-                        <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
-                        <span className="text-teal-700 text-xs font-semibold uppercase tracking-widest">Now Accepting New Patients</span>
+                <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col lg:flex-row items-center justify-between min-h-[calc(100vh-80px)] py-10 lg:py-0 relative">
+
+                        {/* LEFT: Text Layer */}
+                        <div className="w-full lg:w-1/2 xl:w-5/12 flex flex-col justify-center order-1 mt-10 lg:mt-0">
+                            {/* Headline */}
+                            <h1 className="display-title anim-fade-up d-100 relative z-20">
+                                Your<br />
+                                <span className="display-accent drop-shadow-sm">Dental</span><br />
+                                Story <span style={{ color: 'var(--gold)' }}>Starts</span><br />
+                                <span style={{ color: 'var(--text-2)', fontSize: '0.45em', fontWeight: 600 }}>here.</span>
+                            </h1>
+
+                            <p className="anim-fade-up d-300 mt-6 text-base sm:text-lg leading-relaxed max-w-md relative z-20" style={{ color: 'var(--text-2)', textShadow: '0 2px 10px rgba(255,255,255,0.8)' }}>
+                                Modern dentistry with a genuinely personal touch. We craft <strong style={{ color: 'var(--text)' }}>confident, healthy smiles</strong> for your whole family in Pimple Saudagar, Pune.
+                            </p>
+
+                            {/* CTAs */}
+                            <div className="anim-fade-up d-400 flex flex-col sm:flex-row gap-3 mt-8 relative z-20">
+                                <button onClick={onBooking} className="btn btn-primary text-base px-7 py-4 shadow-xl shadow-green-900/10">
+                                    <Calendar className="w-5 h-5" /> Book Appointment
+                                </button>
+                                <a href={wa()} target="_blank" rel="noopener noreferrer" className="btn btn-wa text-base px-7 py-4 shadow-xl">
+                                    <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
+                                </a>
+                            </div>
+
+                            {/* Trust chips */}
+                            <div className="anim-fade-up d-500 flex flex-wrap gap-2 mt-6 relative z-20">
+                                {['₹ Transparent Pricing', '✓ Painless Procedures', '⏱ Open 9AM–9:30PM Daily'].map(c => (
+                                    <span key={c} className="badge badge-accent text-[0.65rem] bg-white/90 backdrop-blur-sm border border-black/5">{c}</span>
+                                ))}
+                            </div>
+
+                            {/* Reviews Carousel */}
+                            <div className="anim-fade-up d-600 mt-10 relative z-20">
+                                <span className="text-xs font-bold uppercase tracking-wider mb-3 block" style={{ color: 'var(--text-2)' }}>Real Patient Stories</span>
+                                <div className="flex overflow-x-auto snap-x hide-scrollbar gap-4 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+                                    <div className="snap-start flex-shrink-0 w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border overflow-hidden flex items-center justify-center p-2 transition-transform hover:-translate-y-1" style={{ borderColor: 'var(--border)' }}>
+                                        <img src={img('images/review-pooja-ingle.png')} alt="Review from Pooja Ingle" className="w-full h-auto object-contain rounded-xl border border-gray-100" />
+                                    </div>
+                                    <div className="snap-start flex-shrink-0 w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border overflow-hidden flex items-center justify-center p-2 transition-transform hover:-translate-y-1" style={{ borderColor: 'var(--border)' }}>
+                                        <img src={img('images/review-rohit-charkhe.png')} alt="Review from Rohit Charkhe" className="w-full h-auto object-contain rounded-xl border border-gray-100" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* RIGHT: Floating UI Accents over the image side */}
+                        <div className="hidden lg:flex w-full lg:w-1/2 justify-end relative h-[600px] order-2">
+                            {/* Floating badge top-right */}
+                            <div className="absolute top-10 right-0 lg:-right-4 z-20 anim-scale-up d-600 backdrop-blur-md"
+                                style={{ background: 'rgba(191,148,48,0.95)', borderRadius: '1.5rem', padding: '1rem 1.5rem', boxShadow: '0 16px 40px rgba(191,148,48,0.25)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <div className="text-3xl font-black" style={{ fontFamily: "'Inter', sans-serif" }}>4.9</div>
+                                    <Star className="w-6 h-6 fill-white text-white" />
+                                </div>
+                                <div className="text-sm font-semibold opacity-95">Google Rating</div>
+                                <div className="text-xs opacity-80 mt-1">From 90+ Reviews</div>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
 
-                    <h1 className="hero-title animate-fade-in-up">
-                        My<span className="text-teal-600">Dental</span>Story
-                    </h1>
-                    <p className="hero-subtitle mt-3 animate-fade-in-up animate-delay-200">
-                        Gentle Care · Beautiful Smiles
-                    </p>
-                    <p className="mt-6 text-lg text-slate-600 max-w-xl mx-auto animate-fade-in-up animate-delay-300 leading-relaxed">
-                        Modern dentistry with a personal touch. We craft confident, healthy smiles for your entire family in the heart of Pune.
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 animate-fade-in-up animate-delay-400">
-                        <button onClick={onBooking} className="btn-primary text-base px-7 py-4">
-                            <Calendar className="w-5 h-5" />
-                            Book Appointment
-                        </button>
-                        <a href={waLink()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp text-base px-7 py-4">
-                            <MessageCircle className="w-5 h-5" />
-                            Chat on WhatsApp
-                        </a>
-                    </div>
-
-                    {/* Trust chips */}
-                    <div className="flex flex-wrap items-center justify-center gap-3 mt-8 animate-fade-in-up animate-delay-500">
-                        {['₹ Transparent Pricing', '✓ No Hidden Fees', '⏱ Same-Day Appointments'].map(item => (
-                            <span key={item} className="px-4 py-1.5 rounded-full bg-white/80 backdrop-blur border border-slate-200 text-xs font-medium text-slate-600">
-                                {item}
-                            </span>
+                {/* Bottom contact bar */}
+                <div className="absolute bottom-6 left-0 right-0 px-4 hidden sm:block">
+                    <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-6 text-sm" style={{ color: 'var(--text-2)' }}>
+                        {[
+                            { label: '+91 79727 52597', href: 'tel:+917972752597' },
+                            { label: 'P K Chowk, Pimple Saudagar, Pune 411027', href: undefined },
+                            { label: 'Open daily 9AM – 9:30PM', href: undefined },
+                        ].map((item, i) => (
+                            item.href
+                                ? <a key={i} href={item.href} className="hover:text-teal-600 transition-colors" style={{ color: 'var(--text-2)' }}>{item.label}</a>
+                                : <span key={i}>{item.label}</span>
                         ))}
-                    </div>
-                </div>
-
-                {/* Bottom info bar */}
-                <div className="absolute bottom-8 left-0 right-0 px-4">
-                    <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-sm text-slate-600">
-                        <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-teal-600 transition-colors">
-                            <Phone className="w-4 h-4 text-teal-500" /> +91 98765 43210
-                        </a>
-                        <span className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-teal-500" /> 12 Maple Avenue, Pune
-                        </span>
-                        <span className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-teal-500" /> Mon–Fri 8am–6pm
-                        </span>
                     </div>
                 </div>
             </section>
 
-            {/* ─── STATS ─────────────────────────────────────────────── */}
-            <section className="py-16 px-4 sm:px-6 bg-white border-y border-slate-100">
-                <RevealSection>
-                    <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* ═══════════════════════════════════════════
+          STATS BAR
+          ═══════════════════════════════════════════ */}
+            <section className="py-10 sm:py-14 px-4 sm:px-6" style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+                <Reveal>
+                    <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
                         {STATS.map((s, i) => (
-                            <div key={i} className="stat-item text-center">
-                                <span className="text-3xl sm:text-4xl font-black text-teal-600">{s.value}</span>
-                                <span className="block mt-1.5 text-xs font-medium text-slate-500 uppercase tracking-widest">{s.label}</span>
+                            <div key={i} className="stat-card">
+                                <span className="block text-3xl sm:text-4xl font-black" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--accent)' }}>{s.value}</span>
+                                <span className="block mt-1.5 text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--text-2)' }}>{s.label}</span>
                             </div>
                         ))}
                     </div>
-                </RevealSection>
+                </Reveal>
             </section>
 
-            {/* ─── SERVICES ───────────────────────────────────────────── */}
-            <section className="py-24 px-4 sm:px-6 lg:px-8">
+            {/* ═══════════════════════════════════════════
+          SERVICES
+          ═══════════════════════════════════════════ */}
+            <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-                    <RevealSection>
-                        <span className="section-label">Our Services</span>
-                        <h2 className="section-title mt-3">Complete dental care for your whole family.</h2>
-                        <p className="mt-4 text-slate-500 leading-relaxed">From routine cleanings to full smile transformations — we offer every treatment your family needs under one roof.</p>
-                        <div className="mt-10 space-y-2">
+                    <Reveal>
+                        <span className="section-eyebrow">Our Services</span>
+                        <h2 className="section-title mt-3">Complete dental care<br />for your whole family.</h2>
+                        <p className="mt-4 text-base leading-relaxed" style={{ color: 'var(--text-2)' }}>Every treatment your family needs — under one roof, delivered with warmth and expertise.</p>
+                        <div className="mt-10 space-y-1">
                             {SERVICES.map((s, i) => (
                                 <div key={i} className="service-item">
-                                    <div className="icon-ring">
-                                        <s.icon className="w-6 h-6 text-teal-600" />
-                                    </div>
+                                    <div className="icon-ring"><s.icon className="w-5 h-5" style={{ color: 'var(--accent)' }} /></div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-800">{s.title}</h3>
-                                        <p className="text-sm text-slate-500 mt-0.5">{s.desc}</p>
+                                        <h3 className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{s.title}</h3>
+                                        <p className="text-sm mt-0.5 leading-relaxed" style={{ color: 'var(--text-2)' }}>{s.desc}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <Link to="/services" className="mt-8 inline-flex items-center gap-2 text-teal-600 font-semibold hover:gap-3 transition-all">
+                        <Link to="/services" className="mt-8 inline-flex items-center gap-1.5 font-semibold text-sm hover:gap-3 transition-all" style={{ color: 'var(--accent)' }}>
                             View all services <ChevronRight className="w-4 h-4" />
                         </Link>
-                    </RevealSection>
-
-                    <RevealSection>
-                        <div className="image-card h-[500px] lg:h-[620px]">
-                            <img src="/images/services-dentist.jpg" alt="Dentist consulting with patient" className="w-full h-full object-cover" />
+                    </Reveal>
+                    <Reveal>
+                        <div className="image-card h-[480px] lg:h-[600px]">
+                            <img src={img('images/services-dentist.jpg')} alt="Dentist consulting with patient" className="w-full h-full object-cover" />
                         </div>
-                    </RevealSection>
+                    </Reveal>
                 </div>
             </section>
 
-            {/* ─── WHY CHOOSE US ──────────────────────────────────────── */}
-            <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50">
+            {/* ═══════════════════════════════════════════
+          WHY CHOOSE US
+          ═══════════════════════════════════════════ */}
+            <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--bg-alt)' }}>
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-                    <RevealSection className="order-2 lg:order-1">
-                        <div className="image-card h-[500px] lg:h-[580px]">
-                            <img src="/images/why-closeup.jpg" alt="Advanced dental procedure" className="w-full h-full object-cover" />
+                    <Reveal className="order-2 lg:order-1">
+                        <div className="image-card h-[480px] lg:h-[560px]">
+                            <img src={img('images/why-closeup.jpg')} alt="Advanced dental procedure" className="w-full h-full object-cover" />
                         </div>
-                    </RevealSection>
-
-                    <RevealSection className="order-1 lg:order-2">
-                        <span className="section-label">Why Choose Us</span>
-                        <h2 className="section-title mt-3">Modern care, gentle hands.</h2>
-                        <p className="mt-4 text-slate-500 leading-relaxed">We combine cutting-edge technology with genuine care, ensuring your visits are comfortable, transparent, and effective.</p>
-                        <div className="mt-10 space-y-2">
+                    </Reveal>
+                    <Reveal className="order-1 lg:order-2">
+                        <span className="section-eyebrow">Why Choose Us</span>
+                        <h2 className="section-title mt-3">Modern care,<br />gentle hands.</h2>
+                        <p className="mt-4 text-base leading-relaxed" style={{ color: 'var(--text-2)' }}>We combine state-of-the-art technology with a patient-first philosophy that puts your comfort above everything.</p>
+                        <div className="mt-10 space-y-1">
                             {WHY.map((item, i) => (
                                 <div key={i} className="service-item">
-                                    <div className="icon-ring">
-                                        <item.icon className="w-6 h-6 text-teal-600" />
-                                    </div>
+                                    <div className="icon-ring"><item.icon className="w-5 h-5" style={{ color: 'var(--accent)' }} /></div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-800">{item.title}</h3>
-                                        <p className="text-sm text-slate-500 mt-0.5">{item.desc}</p>
+                                        <h3 className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{item.title}</h3>
+                                        <p className="text-sm mt-0.5 leading-relaxed" style={{ color: 'var(--text-2)' }}>{item.desc}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    </RevealSection>
+                    </Reveal>
                 </div>
             </section>
 
-            {/* ─── PATIENT CARE ───────────────────────────────────────── */}
+            {/* ═══════════════════════════════════════════
+          PATIENT CARE
+          ═══════════════════════════════════════════ */}
             <section className="py-24 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-                    <RevealSection>
-                        <span className="section-label">Patient Comfort</span>
-                        <h2 className="section-title mt-3">We make your visit calm and predictable.</h2>
-                        <p className="mt-4 text-slate-500 leading-relaxed">From the moment you walk in, you'll experience a relaxed, welcoming environment designed around your comfort.</p>
+                    <Reveal>
+                        <span className="section-eyebrow">Patient Comfort</span>
+                        <h2 className="section-title mt-3">We make your visit<br />calm and predictable.</h2>
+                        <p className="mt-4 text-base leading-relaxed" style={{ color: 'var(--text-2)' }}>From the moment you walk in, our environment is designed around your ease and wellbeing — especially for nervous patients and children.</p>
                         <div className="mt-10 space-y-5">
                             {[
-                                { icon: Stethoscope, title: 'Sedation Options', desc: 'Nitrous oxide and gentle numbing for anxiety-free care.' },
-                                { icon: MessageCircle, title: 'Clear Communication', desc: 'We explain every step before we begin — no surprises.' },
-                                { icon: Heart, title: 'Comfort Amenities', desc: 'Noise-canceling headphones, warm towels, calming music.' },
+                                { icon: Stethoscope, title: 'Painless Techniques', desc: 'Patients are often surprised by how comfortable procedures feel. Kids included.' },
+                                { icon: MessageCircle, title: 'Clear Communication', desc: 'We explain every step before we begin — no surprises, no anxiety.' },
+                                { icon: Heart, title: 'Child-Friendly Approach', desc: 'Dr. Nikhil engages children in friendly conversation to ease anxiety and build trust.' },
                             ].map((c, i) => (
                                 <div key={i} className="flex items-start gap-4">
-                                    <div className="w-11 h-11 rounded-full bg-teal-50 flex items-center justify-center flex-shrink-0">
-                                        <c.icon className="w-5 h-5 text-teal-600" />
+                                    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--accent-lite)' }}>
+                                        <c.icon className="w-5 h-5" style={{ color: 'var(--accent)' }} />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-slate-800">{c.title}</h3>
-                                        <p className="text-sm text-slate-500 mt-0.5">{c.desc}</p>
+                                        <h3 className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{c.title}</h3>
+                                        <p className="text-sm mt-0.5" style={{ color: 'var(--text-2)' }}>{c.desc}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <a href={waLink('Hi, I want to know about comfort options at your clinic')} target="_blank" rel="noopener noreferrer"
-                            className="mt-8 inline-flex items-center gap-2 text-teal-600 font-semibold hover:gap-3 transition-all">
+                        <a href={wa()} target="_blank" rel="noopener noreferrer"
+                            className="mt-8 inline-flex items-center gap-1.5 font-semibold text-sm hover:gap-3 transition-all" style={{ color: 'var(--accent)' }}>
                             Ask about comfort options <ChevronRight className="w-4 h-4" />
                         </a>
-                    </RevealSection>
-
-                    <RevealSection>
-                        <div className="image-card h-[500px] lg:h-[580px]">
-                            <img src="/images/care-patient.jpg" alt="Comfortable patient experience" className="w-full h-full object-cover" />
+                    </Reveal>
+                    <Reveal>
+                        <div className="image-card h-[480px] lg:h-[560px]">
+                            <img src={img('images/care-patient.jpg')} alt="Comfortable patient experience" className="w-full h-full object-cover" />
                         </div>
-                    </RevealSection>
+                    </Reveal>
                 </div>
             </section>
 
-            {/* ─── TESTIMONIALS ───────────────────────────────────────── */}
-            <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50">
-                <RevealSection>
+            {/* ═══════════════════════════════════════════
+          TESTIMONIALS
+          ═══════════════════════════════════════════ */}
+            <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--bg-alt)' }}>
+                <Reveal>
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center mb-14">
-                            <span className="section-label">Patient Stories</span>
+                            <span className="section-eyebrow">Patient Stories</span>
                             <h2 className="section-title mt-3">Real smiles. Real stories.</h2>
-                            <p className="mt-3 text-slate-500 max-w-xl mx-auto">Hear from the patients whose lives we've touched — one smile at a time.</p>
+                            <p className="mt-3 text-sm max-w-lg mx-auto" style={{ color: 'var(--text-2)' }}>Hear from families who trust us with their smiles — one visit at a time.</p>
                         </div>
-                        <div className="grid md:grid-cols-3 gap-6">
+                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
                             {TESTIMONIALS.map((t, i) => (
                                 <div key={i} className="testimonial-card">
                                     <div className="flex gap-1 mb-4">
-                                        {[...Array(t.rating)].map((_, j) => (
-                                            <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                                        ))}
+                                        {[...Array(t.rating)].map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
                                     </div>
-                                    <p className="text-slate-700 leading-relaxed text-sm">"{t.quote}"</p>
+                                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>"{t.quote}"</p>
                                     <div className="mt-5 flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm">
-                                            {t.name[0]}
-                                        </div>
+                                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: 'var(--accent-lite)', color: 'var(--accent)' }}>{t.name[0]}</div>
                                         <div>
-                                            <p className="font-semibold text-slate-800 text-sm">{t.name}</p>
-                                            <p className="text-xs text-slate-500">{t.role}</p>
+                                            <p className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{t.name}</p>
+                                            <p className="text-xs" style={{ color: 'var(--text-2)' }}>{t.role}</p>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </RevealSection>
+                </Reveal>
             </section>
 
-            {/* ─── CTA SECTION ────────────────────────────────────────── */}
-            <section className="relative min-h-[65vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <img src="/images/closing-team.jpg" alt="MyDentalStory clinic team" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-slate-900/60 to-slate-900/85" />
-                </div>
-                <RevealSection>
-                    <div className="relative z-10 text-center px-4 py-20 max-w-2xl mx-auto">
-                        <h2 className="font-black text-4xl sm:text-5xl text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                            Start Your Dental<br />Story Today
+            {/* ═══════════════════════════════════════════
+          CTA SECTION
+          ═══════════════════════════════════════════ */}
+            <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--accent)' }}>
+                <Reveal>
+                    <div className="max-w-4xl mx-auto text-center">
+                        <span className="badge badge-gold bg-white/10 border-white/20 text-white mb-6">Start Today</span>
+                        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight" style={{ fontFamily: "'Inter', sans-serif" }}>
+                            Begin Your<br /><span className="text-emerald-200">Dental Story</span>
                         </h2>
-                        <p className="mt-5 text-white/75 text-lg leading-relaxed">
+                        <p className="mt-6 text-white/90 text-lg leading-relaxed max-w-xl mx-auto">
                             Book your first visit and discover why thousands of Pune families trust us with their smiles.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
-                            <button onClick={onBooking} className="btn-primary px-8 py-4 text-base">
+                            <button onClick={onBooking} className="bg-white font-bold px-8 py-4 rounded-full transition-all hover:scale-105 flex items-center gap-2" style={{ color: 'var(--accent)' }}>
                                 <Calendar className="w-5 h-5" /> Book Appointment
                             </button>
-                            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="btn-whatsapp px-8 py-4 text-base">
+                            <a href={wa()} target="_blank" rel="noopener noreferrer" className="border-2 border-white/50 text-white font-bold px-8 py-4 rounded-full transition-all hover:bg-white/10 flex items-center gap-2">
                                 <MessageCircle className="w-5 h-5" /> WhatsApp Us
                             </a>
                         </div>
-                        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-                            {['Free first consultation', 'Flexible payment plans', 'Family discounts'].map(f => (
-                                <span key={f} className="flex items-center gap-1.5 text-white/80 text-sm">
-                                    <CheckCircle className="w-4 h-4 text-teal-400" /> {f}
-                                </span>
-                            ))}
-                        </div>
                     </div>
-                </RevealSection>
+                </Reveal>
             </section>
 
             {/* Floating WhatsApp */}
-            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="floating-whatsapp" aria-label="Chat on WhatsApp">
+            <a href={wa()} target="_blank" rel="noopener noreferrer" className="floating-wa" aria-label="Chat on WhatsApp">
                 <MessageCircle className="w-7 h-7 text-white" />
             </a>
         </div>

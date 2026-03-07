@@ -1,34 +1,35 @@
 import { useState } from 'react';
 import { Calendar, MessageCircle, Award, Users, Heart, X } from 'lucide-react';
+import { img } from '../utils/images';
 
-const WHATSAPP = '919876543210';
+const WA = '917972752597';
 
 const VALUES = [
-    { icon: Heart, title: 'Patient-First Care', desc: 'Every decision we make starts with what\'s best for your oral health and comfort. You\'re a person, not a set of teeth.' },
+    { icon: Heart, title: 'Patient-First Care', desc: 'Every decision starts with what\'s best for your oral health and comfort. You\'re a person, not a set of teeth.' },
     { icon: Award, title: 'Clinical Excellence', desc: 'Our dentists continuously update their training with international certifications and the latest evidence-based techniques.' },
-    { icon: Users, title: 'Family Approach', desc: 'We build long-term relationships with our patients — treating grandparents, parents, and children with the same warmth.' },
+    { icon: Users, title: 'Family Approach', desc: 'We build long-term relationships — treating grandparents, parents, and children with equal warmth and care.' },
 ];
 
 const DOCTORS = [
     {
-        name: 'Dr. Priya Sharma',
+        name: 'Dr. Nikhil Khandare',
         role: 'General & Cosmetic Dentistry',
-        image: '/images/doctor-priya.jpg',
-        bio: 'Dr. Priya Sharma brings over 12 years of experience in general and cosmetic dentistry. She completed her BDS from Government Dental College, Mumbai, and her MDS in Conservative Dentistry from AIIMS Delhi. Known for her gentle touch and artistic approach to smile design, she has transformed thousands of smiles across Pune.',
-        qualifications: ['BDS, Government Dental College Mumbai', 'MDS (Conservative Dentistry), AIIMS Delhi', 'FICOI — Implantology Fellow'],
-        specializations: ['Smile Makeover', 'Root Canal Treatment', 'Dental Implants', 'Porcelain Veneers'],
+        image: img('images/dr-nikhil.jpg'),
+        bio: 'Dr. Nikhil Khandare is the lead dentist at My Dental Story and is widely known for his gentle, patient-first approach. He is especially praised for his ability to make children feel at ease — engaging them in friendly conversation and familiarizing them with equipment so they never feel anxious. Patients frequently note that even complex procedures like root canals feel surprisingly comfortable under his care.',
+        qualifications: ['BDS — Dental Surgery', 'Specialized Training in Dental Implants', 'Best Dentist in Pimple Saudagar'],
+        specializations: ['Dental Implants', 'Root Canal Treatment', 'Cosmetic Dentistry', 'Children\'s Dentistry'],
         experience: '12+ years',
-        tagline: '"Every patient deserves a smile they\'re proud to share."',
+        tagline: '"Every smile has a story — let\'s make yours a happy one."',
     },
     {
-        name: 'Dr. Leo Chen',
-        role: 'Orthodontics & Implants',
-        image: '/images/doctor-leo.jpg',
-        bio: 'Dr. Leo Chen is a specialist in orthodontics and dental implantology with 10+ years of clinical practice. After graduating from Manipal College of Dental Sciences, he pursued advanced training in implantology from Germany. He is passionate about creating beautiful, functional smiles using the latest techniques.',
-        qualifications: ['BDS, Manipal College of Dental Sciences', 'MDS (Orthodontics)', 'Advanced Diploma in Implantology, Germany'],
-        specializations: ['Invisalign / Clear Aligners', 'Dental Implants', 'Traditional Braces', 'Interceptive Orthodontics'],
-        experience: '10+ years',
-        tagline: '"A perfect smile is built one tooth at a time."',
+        name: 'Dr. Vaidehi Khandare',
+        role: 'Orthodontics & Preventive Care',
+        image: img('images/dr-vaidehi.jpg'),
+        bio: 'Dr. Vaidehi Khandare brings warmth and precision to orthodontics and preventive dental care. She is passionate about guiding patients toward long-term oral health through education, early intervention, and personalized care plans for the entire family.',
+        qualifications: ['BDS — Dental Surgery', 'Training in Orthodontics & Aligners', 'Preventive Dentistry Specialist'],
+        specializations: ['Clear Aligners', 'Traditional Braces', 'Preventive Care', 'Gum Health'],
+        experience: '8+ years',
+        tagline: '"Prevention today means a brighter smile tomorrow."',
     },
 ];
 
@@ -37,45 +38,41 @@ type Doctor = typeof DOCTORS[0];
 function DoctorModal({ doctor, onClose, onBooking }: { doctor: Doctor; onClose: () => void; onBooking: () => void }) {
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-slate-900/65 backdrop-blur-md" onClick={onClose} />
-            <div className="relative w-full max-w-2xl bg-white rounded-[1.75rem] shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto animate-scale-in">
-                <button onClick={onClose} className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/20 flex items-center justify-center hover:bg-black/30 transition-colors">
-                    <X className="w-4 h-4 text-white" />
+            <div className="absolute inset-0 backdrop-blur-sm" style={{ background: 'rgba(0,0,0,0.65)' }} onClick={onClose} />
+            <div className="relative w-full max-w-2xl rounded-[1.75rem] shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto anim-scale-up" style={{ background: 'var(--surface)' }}>
+                <button onClick={onClose} className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors" style={{ background: 'rgba(0,0,0,0.35)', color: '#fff' }}>
+                    <X className="w-4 h-4" />
                 </button>
                 <div className="grid sm:grid-cols-2">
                     <div className="h-64 sm:h-full">
                         <img src={doctor.image} alt={doctor.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-7">
-                        <h3 className="text-2xl font-bold text-slate-800" style={{ fontFamily: 'var(--font-display)' }}>{doctor.name}</h3>
-                        <p className="text-teal-600 font-semibold mt-1 text-sm">{doctor.role}</p>
-                        <p className="text-xs text-slate-400 mt-0.5">{doctor.experience} experience</p>
-                        <p className="mt-5 text-sm text-slate-600 leading-relaxed">{doctor.bio}</p>
+                        <h3 className="text-2xl font-bold" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--text)' }}>{doctor.name}</h3>
+                        <p className="font-semibold mt-1 text-sm" style={{ color: 'var(--accent)' }}>{doctor.role}</p>
+                        <p className="text-xs mt-0.5" style={{ color: 'var(--text-3)' }}>{doctor.experience} experience</p>
+                        <p className="mt-5 text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>{doctor.bio}</p>
                         <div className="mt-5">
-                            <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Qualifications</h4>
+                            <h4 className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--text)' }}>Qualifications</h4>
                             <ul className="space-y-1.5">
                                 {doctor.qualifications.map((q, i) => (
-                                    <li key={i} className="text-xs text-slate-600 flex items-start gap-2">
-                                        <span className="text-teal-500 mt-0.5">✓</span>{q}
+                                    <li key={i} className="text-xs flex items-start gap-2" style={{ color: 'var(--text-2)' }}>
+                                        <span style={{ color: 'var(--accent)' }} className="mt-0.5">✓</span>{q}
                                     </li>
                                 ))}
                             </ul>
                         </div>
                         <div className="mt-5">
-                            <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Specializations</h4>
+                            <h4 className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--text)' }}>Specializations</h4>
                             <div className="flex flex-wrap gap-2">
-                                {doctor.specializations.map((s, i) => (
-                                    <span key={i} className="px-3 py-1 rounded-full text-xs font-medium bg-teal-50 text-teal-700 border border-teal-200">
-                                        {s}
-                                    </span>
-                                ))}
+                                {doctor.specializations.map((s, i) => <span key={i} className="badge badge-accent">{s}</span>)}
                             </div>
                         </div>
-                        <blockquote className="mt-5 italic text-xs text-slate-500 border-l-2 border-teal-400 pl-3">
+                        <blockquote className="mt-5 italic text-xs border-l-2 pl-3" style={{ color: 'var(--text-3)', borderColor: 'var(--gold)' }}>
                             {doctor.tagline}
                         </blockquote>
-                        <button onClick={() => { onClose(); onBooking(); }} className="btn-primary w-full justify-center mt-6">
-                            <Calendar className="w-4 h-4" /> Book with Dr. {doctor.name.split(' ')[1]}
+                        <button onClick={() => { onClose(); onBooking(); }} className="btn btn-primary w-full justify-center mt-6">
+                            <Calendar className="w-4 h-4" /> Book with {doctor.name.split(' ')[1]}
                         </button>
                     </div>
                 </div>
@@ -84,33 +81,27 @@ function DoctorModal({ doctor, onClose, onBooking }: { doctor: Doctor; onClose: 
     );
 }
 
-interface AboutPageProps {
-    onBooking: () => void;
-}
-
-export default function AboutPage({ onBooking }: AboutPageProps) {
+export default function AboutPage({ onBooking }: { onBooking: () => void }) {
     const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
-    const waLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hi, I'd like to know more about MyDentalStory")}`;
+    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`;
 
     return (
-        <div className="min-h-screen bg-[#f6f8fa]">
+        <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
             <div className="grain-overlay" />
 
-            {/* Hero Banner */}
+            {/* Hero Banner — lighter overlay so image is visible */}
             <section className="relative pt-32 pb-20 px-4 sm:px-6 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img src="/images/team-doctor.jpg" alt="MyDentalStory team" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-teal-900/70 via-teal-900/75 to-slate-900/90" />
+
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg,rgba(5,30,18,0.55) 0%,rgba(3,20,12,0.72) 100%)' }} />
                 </div>
                 <div className="relative z-10 max-w-3xl mx-auto text-center">
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/80 text-xs font-semibold uppercase tracking-widest mb-5">
-                        About Us
-                    </span>
-                    <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
-                        A Clinic Built on<br />Trust & Craftsmanship
+                    <span className="badge badge-gold mb-5">About Us</span>
+                    <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight" style={{ fontFamily: "'Inter', sans-serif" }}>
+                        A Clinic Built on<br /><span className="text-emerald-300">Trust &amp; Compassion</span>
                     </h1>
-                    <p className="mt-5 text-white/75 text-lg leading-relaxed max-w-xl mx-auto">
-                        Since 2012, MyDentalStory has been creating healthy, beautiful smiles for families across Pune — with honesty, skill, and genuine care.
+                    <p className="mt-5 text-white/80 text-lg leading-relaxed max-w-xl mx-auto">
+                        Serving families across Pimple Saudagar, Pune since 2012 — with honesty, gentle care, and a genuine commitment to your smile.
                     </p>
                 </div>
             </section>
@@ -119,47 +110,45 @@ export default function AboutPage({ onBooking }: AboutPageProps) {
             <section className="py-24 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
                     <div>
-                        <span className="section-label">Our Story</span>
-                        <h2 className="section-title mt-3">More than a dental clinic</h2>
-                        <div className="space-y-4 mt-6 text-slate-600 leading-relaxed">
-                            <p>MyDentalStory was founded in 2012 with a simple belief: every person deserves dental care that is gentle, honest, and genuinely effective. We saw a gap between the impersonal, rushed care common in busy clinics and what patients truly deserve — time, transparency, and a real relationship with their dentist.</p>
-                            <p>Over the years, we've grown into a full-service dental care center, but our values remain unchanged. We still believe great dental care begins with listening. Before any treatment, we take time to understand your concerns, your goals, and your fears — and build a plan around you.</p>
-                            <p>Our team of specialists brings expertise in everything from children's dentistry to complex implant surgery, always using the latest evidence-based techniques and technology.</p>
+                        <span className="section-eyebrow">Our Story</span>
+                        <h2 className="section-title mt-3">More than a<br />dental clinic.</h2>
+                        <div className="space-y-4 mt-6 text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                            <p>My Dental Story was founded with a simple belief: every person deserves dental care that is gentle, honest, and genuinely effective. We saw a gap between impersonal, rushed care and what patients truly deserve — time, transparency, and a real relationship with their dentist.</p>
+                            <p>Based at P K Chowk, Pimple Saudagar, we've grown into a full-service dental care centre. Yet our values remain unchanged: great dental care begins with listening. Before any treatment, we take the time to understand your concerns, your goals, and your fears.</p>
+                            <p>Our team of specialists brings expertise in everything from children's dentistry to complex implant surgery, always using the latest evidence-based techniques. We're LGBTQ+ friendly and welcome all patients with openness and respect.</p>
                         </div>
                         <div className="mt-8 grid grid-cols-3 gap-4">
                             {[
                                 { val: '2012', label: 'Founded' },
-                                { val: '5,000+', label: 'Patients Served' },
-                                { val: '4.9★', label: 'Avg. Rating' },
+                                { val: '5,000+', label: 'Patients' },
+                                { val: '4.9★', label: '99 Reviews' },
                             ].map((s, i) => (
-                                <div key={i} className="bg-teal-50 border border-teal-100 rounded-2xl p-4 text-center">
-                                    <span className="block text-xl font-black text-teal-700">{s.val}</span>
-                                    <span className="block text-xs text-slate-500 font-medium mt-1">{s.label}</span>
+                                <div key={i} className="stat-card">
+                                    <span className="block text-xl font-black" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--accent)' }}>{s.val}</span>
+                                    <span className="block text-xs font-medium mt-1" style={{ color: 'var(--text-2)' }}>{s.label}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div className="image-card h-[480px] lg:h-[560px]">
-                        <img src="/images/care-patient.jpg" alt="Caring patient at MyDentalStory" className="w-full h-full object-cover" />
+                        <img src={img('images/care-patient.jpg')} alt="Caring patient at MyDentalStory" className="w-full h-full object-cover" />
                     </div>
                 </div>
             </section>
 
             {/* Values */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+            <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
                 <div className="max-w-5xl mx-auto">
                     <div className="text-center mb-14">
-                        <span className="section-label">Our Values</span>
+                        <span className="section-eyebrow">Our Values</span>
                         <h2 className="section-title mt-3">What we stand for</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         {VALUES.map((v, i) => (
                             <div key={i} className="card p-7">
-                                <div className="w-12 h-12 rounded-2xl bg-teal-50 flex items-center justify-center mb-5">
-                                    <v.icon className="w-6 h-6 text-teal-600" />
-                                </div>
-                                <h3 className="font-bold text-lg text-slate-800 mb-2">{v.title}</h3>
-                                <p className="text-sm text-slate-500 leading-relaxed">{v.desc}</p>
+                                <div className="icon-ring mb-5"><v.icon className="w-6 h-6" style={{ color: 'var(--accent)' }} /></div>
+                                <h3 className="font-bold text-lg mb-2" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--text)' }}>{v.title}</h3>
+                                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>{v.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -167,12 +156,12 @@ export default function AboutPage({ onBooking }: AboutPageProps) {
             </section>
 
             {/* Meet the Team */}
-            <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50">
+            <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ background: 'var(--bg-alt)' }}>
                 <div className="max-w-5xl mx-auto">
                     <div className="text-center mb-14">
-                        <span className="section-label">Meet the Team</span>
-                        <h2 className="section-title mt-3">Experienced dentists who listen.</h2>
-                        <p className="mt-3 text-slate-500 max-w-lg mx-auto">Our specialists combine years of training with genuine passion for patient care.</p>
+                        <span className="section-eyebrow">Our Doctors</span>
+                        <h2 className="section-title mt-3">Experienced dentists<br />who listen.</h2>
+                        <p className="mt-3 text-sm max-w-lg mx-auto" style={{ color: 'var(--text-2)' }}>Our specialists combine years of training with a genuine passion for patient care — gentle with every patient, especially children.</p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-8">
                         {DOCTORS.map((doc, i) => (
@@ -181,20 +170,14 @@ export default function AboutPage({ onBooking }: AboutPageProps) {
                                     <img src={doc.image} alt={doc.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 </div>
                                 <div className="p-6">
-                                    <h3 className="font-bold text-xl text-slate-800">{doc.name}</h3>
-                                    <p className="text-teal-600 text-sm font-medium mt-0.5">{doc.role}</p>
-                                    <p className="text-xs text-slate-400 mt-0.5">{doc.experience} experience</p>
-                                    <blockquote className="mt-4 text-sm italic text-slate-500 border-l-2 border-teal-400 pl-3">
-                                        {doc.tagline}
-                                    </blockquote>
+                                    <h3 className="font-bold text-xl" style={{ fontFamily: "'Inter', sans-serif", color: 'var(--text)' }}>{doc.name}</h3>
+                                    <p className="font-medium text-sm mt-0.5" style={{ color: 'var(--accent)' }}>{doc.role}</p>
+                                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-3)' }}>{doc.experience} experience</p>
+                                    <blockquote className="mt-4 italic text-sm border-l-2 pl-3" style={{ color: 'var(--text-2)', borderColor: 'var(--gold)' }}>{doc.tagline}</blockquote>
                                     <div className="flex flex-wrap gap-2 mt-4">
-                                        {doc.specializations.slice(0, 3).map((s, j) => (
-                                            <span key={j} className="px-2.5 py-1 rounded-full text-xs bg-teal-50 text-teal-700 border border-teal-200">{s}</span>
-                                        ))}
+                                        {doc.specializations.slice(0, 3).map((s, j) => <span key={j} className="badge badge-accent">{s}</span>)}
                                     </div>
-                                    <button className="mt-5 text-teal-600 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
-                                        View Profile →
-                                    </button>
+                                    <button className="mt-5 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all" style={{ color: 'var(--accent)' }}>View Profile →</button>
                                 </div>
                             </div>
                         ))}
@@ -202,17 +185,22 @@ export default function AboutPage({ onBooking }: AboutPageProps) {
                 </div>
             </section>
 
-            {/* Clinic Images */}
+            {/* Clinic Gallery */}
             <section className="py-24 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-12">
-                        <span className="section-label">Our Clinic</span>
-                        <h2 className="section-title mt-3">A space designed for your comfort</h2>
+                        <span className="section-eyebrow">Our Clinic</span>
+                        <h2 className="section-title mt-3">A space designed<br />for your comfort.</h2>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {['/images/hero-clinic.jpg', '/images/services-dentist.jpg', '/images/why-closeup.jpg', '/images/team-doctor.jpg', '/images/closing-team.jpg', '/images/care-patient.jpg'].map((img, i) => (
-                            <div key={i} className={`image-card overflow-hidden ${i === 0 ? 'col-span-2 row-span-2 h-80 md:h-auto' : 'h-40 md:h-52'}`}>
-                                <img src={img} alt={`MyDentalStory clinic ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {[
+                            img('images/clinic/entrace-area.png'),
+                            img('images/clinic/main-working-area.png'),
+                            img('images/clinic/main-room.png'),
+                            img('images/clinic/outside-view.png')
+                        ].map((src, i) => (
+                            <div key={i} className="image-card overflow-hidden h-64 md:h-80 shadow-md">
+                                <img src={src} alt={`MyDentalStory Clinic View ${i + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                             </div>
                         ))}
                     </div>
@@ -220,13 +208,11 @@ export default function AboutPage({ onBooking }: AboutPageProps) {
             </section>
 
             {/* CTA */}
-            <section className="py-20 px-4 bg-gradient-to-br from-teal-700 to-teal-600 text-white text-center">
-                <h2 className="text-3xl sm:text-4xl font-black" style={{ fontFamily: 'var(--font-display)' }}>
-                    Ready to meet the team?
-                </h2>
+            <section className="py-20 px-4 text-center" style={{ background: 'var(--accent)' }}>
+                <h2 className="text-3xl sm:text-4xl font-black text-white" style={{ fontFamily: "'Inter', sans-serif" }}>Ready to meet the team?</h2>
                 <p className="mt-4 text-white/80 max-w-md mx-auto">Come see us in person. Your first consultation is always at zero pressure.</p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-                    <button onClick={onBooking} className="bg-white text-teal-700 font-bold px-8 py-3.5 rounded-full hover:bg-teal-50 transition-colors flex items-center gap-2">
+                    <button onClick={onBooking} className="bg-white font-bold px-8 py-3.5 rounded-full hover:opacity-90 transition-all flex items-center gap-2" style={{ color: 'var(--accent)' }}>
                         <Calendar className="w-5 h-5" /> Book a Visit
                     </button>
                     <a href={waLink} target="_blank" rel="noopener noreferrer" className="border-2 border-white/50 text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/10 transition-colors flex items-center gap-2">
@@ -235,13 +221,8 @@ export default function AboutPage({ onBooking }: AboutPageProps) {
                 </div>
             </section>
 
-            {/* Doctor Modal */}
             {selectedDoctor && (
-                <DoctorModal
-                    doctor={selectedDoctor}
-                    onClose={() => setSelectedDoctor(null)}
-                    onBooking={onBooking}
-                />
+                <DoctorModal doctor={selectedDoctor} onClose={() => setSelectedDoctor(null)} onBooking={onBooking} />
             )}
         </div>
     );
