@@ -88,7 +88,7 @@ function FAQItem({ q, a, open, toggle }: { q: string; a: string; open: boolean; 
 
 export default function ServicesPage({ onBooking }: { onBooking: () => void }) {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
-    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`;
+    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=Hello, I am interested in your services.`;
 
     return (
         <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -172,7 +172,7 @@ export default function ServicesPage({ onBooking }: { onBooking: () => void }) {
                     </div>
                     <div className="mt-10 text-center">
                         <p className="text-sm mb-4" style={{ color: 'var(--text-2)' }}>Still have questions?</p>
-                        <a href={`https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`} target="_blank" rel="noopener noreferrer" className="btn btn-wa px-6 py-3">
+                        <a href={`https://api.whatsapp.com/send/?phone=${WA}&text=Hello, I am interested in your services.`} target="_blank" rel="noopener noreferrer" className="btn btn-wa px-6 py-3">
                             <MessageCircle className="w-5 h-5" /> Ask on WhatsApp
                         </a>
                     </div>

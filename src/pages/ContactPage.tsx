@@ -22,7 +22,7 @@ export default function ContactPage() {
         setTimeout(() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', subject: '', message: '' }); }, 4000);
     };
 
-    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`;
+    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=Hello, I am interested in your services.`;
     const mapsLink = `https://maps.google.com/?q=My+Dental+Story,+Pimple+Saudagar,+Pune`;
 
     return (

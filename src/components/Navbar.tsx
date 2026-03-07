@@ -32,7 +32,7 @@ export default function Navbar({ onBooking }: NavbarProps) {
 
                         {/* Logo */}
                         <NavLink to="/" className="nav-logo" style={{ background: 'transparent', border: 'none' }}>
-                            <img src="/images/logo.png" alt="MyDentalStory" className="w-8 h-8 flex-shrink-0 object-contain drop-shadow-sm" />
+                            <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="MyDentalStory" className="w-8 h-8 flex-shrink-0 object-contain drop-shadow-sm" />
                             <span className="text-sm font-bold uppercase tracking-[0.14em] hidden sm:block" style={{ color: 'var(--text)' }}>MyDentalStory</span>
                         </NavLink>
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { img } from '../utils/images';
 
 const WA = '917972752597';
-const wa = () => `https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`;
+const wa = () => `https://api.whatsapp.com/send/?phone=${WA}&text=Hello, I am interested in your services.`;
 
 const SERVICES = [
     { icon: Shield, title: 'Preventive Care', desc: 'Cleanings, exams, and hygiene plans to keep your smile healthy long-term.' },
@@ -140,17 +140,7 @@ export default function HomePage({ onBooking }: { onBooking: () => void }) {
                             </div>
 
                             {/* Reviews Carousel */}
-                            <div className="anim-fade-up d-600 mt-10 relative z-20">
-                                <span className="text-xs font-bold uppercase tracking-wider mb-3 block" style={{ color: 'var(--text-2)' }}>Real Patient Stories</span>
-                                <div className="flex overflow-x-auto snap-x hide-scrollbar gap-4 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-                                    <div className="snap-start flex-shrink-0 w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border overflow-hidden flex items-center justify-center p-2 transition-transform hover:-translate-y-1" style={{ borderColor: 'var(--border)' }}>
-                                        <img src={img('images/review-pooja-ingle.png')} alt="Review from Pooja Ingle" className="w-full h-auto object-contain rounded-xl border border-gray-100" />
-                                    </div>
-                                    <div className="snap-start flex-shrink-0 w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md rounded-2xl shadow-lg border overflow-hidden flex items-center justify-center p-2 transition-transform hover:-translate-y-1" style={{ borderColor: 'var(--border)' }}>
-                                        <img src={img('images/review-rohit-charkhe.png')} alt="Review from Rohit Charkhe" className="w-full h-auto object-contain rounded-xl border border-gray-100" />
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
 
                         {/* RIGHT: Floating UI Accents over the image side */}

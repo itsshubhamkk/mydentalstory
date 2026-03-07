@@ -27,7 +27,7 @@ export default function Footer() {
                         </p>
                         <p className="text-xs mt-2 font-medium" style={{ color: 'var(--accent)' }}>⭐ 4.9 · 99 Google Reviews · LGBTQ+ Friendly</p>
                         <div className="mt-6 flex flex-wrap gap-3">
-                            <a href={`https://api.whatsapp.com/send/?phone=${WA}&text=New+Clinic+Registration+Enquiry%3A%0A%0AClinic+Name%3A+MyDentalStory%0AMobile%3A+%0AEmail%3A+%0AAddress%3A+&type=phone_number&app_absent=0`} target="_blank" rel="noopener noreferrer"
+                            <a href={`https://api.whatsapp.com/send/?phone=${WA}&text=Hello, I am interested in your services.`} target="_blank" rel="noopener noreferrer"
                                 className="btn btn-wa px-5 py-2.5 text-sm">
                                 <MessageCircle className="w-4 h-4" /> WhatsApp Us
                             </a>

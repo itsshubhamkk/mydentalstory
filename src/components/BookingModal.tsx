@@ -34,7 +34,7 @@ Message: ${form.message || 'None'}`;
         }, 3500);
     };
 
-    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=${encodeURIComponent('New Clinic Registration Enquiry:\n\nClinic Name: MyDentalStory\nName: \nMobile: \nService: \nPreferred Date: \nMessage: ')}&type=phone_number&app_absent=0`;
+    const waLink = `https://api.whatsapp.com/send/?phone=${WA}&text=${encodeURIComponent('Hello, I would like to book an appointment')}&type=phone_number&app_absent=0`;
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
