@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Clock, Mail, MessageCircle, Linkedin } from 'lucide-react';
+import { Phone, MapPin, Clock, Mail, MessageCircle } from 'lucide-react';
 
 const YEAR = new Date().getFullYear();
 const WA = '917972752597';
@@ -10,20 +10,6 @@ const LINKS = [
     { label: 'About Us', to: '/about' },
     { label: 'Contact', to: '/contact' },
 ];
-
-const LinkedInIcon = ({ size = 14, ...props }) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        {...props}
-    >
-        <path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5V5c0-2.761-2.238-5-5-5zM6 19H3v-9h3v9zM4.5 9.731C3.534 9.731 2.75 8.941 2.75 7.97S3.534 6.209 4.5 6.209s1.75.79 1.75 1.761-.783 1.761-1.75 1.761zM22 19h-3v-4.5c0-1.07-.02-2.444-1.488-2.444-1.488 0-1.716 1.162-1.716 2.372V19h-3v-9h2.881v1.231h.041c.401-.76 1.379-1.562 2.838-1.562C20.036 9.669 21 11.666 21 14.259V19z" />
-    </svg>
-);
 
 export default function Footer() {
     return (
