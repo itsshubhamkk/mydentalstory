@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     Calendar, MessageCircle, ChevronRight, Star,
     Shield, Sparkles, Stethoscope, AlignCenter, Heart, Monitor, Wallet
@@ -85,6 +85,109 @@ function Reveal({ children, className = '' }: { children: React.ReactNode; class
     return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
 }
 
+function TestimonialCarousel() {
+    const [cardsPerView, setCardsPerView] = useState(3);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+
+    useEffect(() => {
+        const updateCPV = () => {
+            if (window.innerWidth < 640) setCardsPerView(1);
+            else if (window.innerWidth < 768) setCardsPerView(2);
+            else setCardsPerView(3);
+        };
+        updateCPV();
+        window.addEventListener('resize', updateCPV);
+        return () => window.removeEventListener('resize', updateCPV);
+    }, []);
+
+    useEffect(() => {
+        if (isPaused) return;
+        const timer = setInterval(() => {
+            setCurrentIndex((prev) => {
+                const maxIndex = Math.max(0, TESTIMONIALS.length - cardsPerView);
+                return prev >= maxIndex ? 0 : prev + 1;
+            });
+        }, 3000); // 3 seconds per slide
+        return () => clearInterval(timer);
+    }, [cardsPerView, isPaused]);
+
+    // Touch event handling for swiping
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) {
+            setCurrentIndex(prev => Math.min(prev + 1, Math.max(0, TESTIMONIALS.length - cardsPerView)));
+        }
+        if (isRightSwipe) {
+            setCurrentIndex(prev => Math.max(prev - 1, 0));
+        }
+    };
+
+    return (
+        <div
+            className="relative w-full overflow-hidden px-1 py-2"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+        >
+            <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)` }}
+            >
+                {TESTIMONIALS.map((t, i) => (
+                    <div
+                        key={i}
+                        className="flex-shrink-0 px-2.5"
+                        style={{ width: `${100 / cardsPerView}%` }}
+                    >
+                        <div className="testimonial-card h-full flex flex-col cursor-grab active:cursor-grabbing">
+                            <div className="flex gap-1 mb-4">
+                                {[...Array(t.rating)].map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
+                            </div>
+                            <p className="text-sm leading-relaxed flex-grow" style={{ color: 'var(--text)' }}>"{t.quote}"</p>
+                            <div className="mt-5 flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: 'var(--accent-lite)', color: 'var(--accent)' }}>{t.name[0]}</div>
+                                <div>
+                                    <p className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{t.name}</p>
+                                    <p className="text-xs" style={{ color: 'var(--text-2)' }}>{t.role}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Dots */}
+            <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: Math.max(0, TESTIMONIALS.length - cardsPerView + 1) }).map((_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => setCurrentIndex(i)}
+                        className={`w-2 h-2 rounded-full transition-all ${i === currentIndex ? 'bg-amber-400 w-6' : 'bg-gray-300 hover:bg-amber-200'}`}
+                        aria-label={`Go to slide ${i + 1}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
 export default function HomePage({ onBooking }: { onBooking: () => void }) {
     return (
         <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -106,7 +209,7 @@ export default function HomePage({ onBooking }: { onBooking: () => void }) {
                 </div>
 
                 <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col lg:flex-row items-center justify-between min-h-[calc(100vh-80px)] py-10 lg:py-0 relative">
+                    <div className="flex flex-col lg:flex-row items-center justify-between min-h-[calc(100vh-80px)] py-10 pb-20 sm:pb-10 lg:py-0 lg:pb-12 relative">
 
                         {/* LEFT: Text Layer */}
                         <div className="w-full lg:w-1/2 xl:w-5/12 flex flex-col justify-center order-1 mt-10 lg:mt-0">
@@ -134,7 +237,7 @@ export default function HomePage({ onBooking }: { onBooking: () => void }) {
 
                             {/* Trust chips */}
                             <div className="anim-fade-up d-500 flex flex-wrap gap-2 mt-6 relative z-20">
-                                {['₹ Transparent Pricing', '✓ Painless Procedures', '⏱ Open 9AM–9:30PM Daily'].map(c => (
+                                {['✓ Painless Procedures', '⏱ Open 9AM–9:30PM Daily'].map(c => (
                                     <span key={c} className="badge badge-accent text-[0.65rem] bg-white/90 backdrop-blur-sm border border-black/5">{c}</span>
                                 ))}
                             </div>
@@ -303,22 +406,8 @@ export default function HomePage({ onBooking }: { onBooking: () => void }) {
                             <h2 className="section-title mt-3">Real smiles. Real stories.</h2>
                             <p className="mt-3 text-sm max-w-lg mx-auto" style={{ color: 'var(--text-2)' }}>Hear from families who trust us with their smiles — one visit at a time.</p>
                         </div>
-                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
-                            {TESTIMONIALS.map((t, i) => (
-                                <div key={i} className="testimonial-card">
-                                    <div className="flex gap-1 mb-4">
-                                        {[...Array(t.rating)].map((_, j) => <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
-                                    </div>
-                                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>"{t.quote}"</p>
-                                    <div className="mt-5 flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: 'var(--accent-lite)', color: 'var(--accent)' }}>{t.name[0]}</div>
-                                        <div>
-                                            <p className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{t.name}</p>
-                                            <p className="text-xs" style={{ color: 'var(--text-2)' }}>{t.role}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                        <div className="-mx-2.5">
+                            <TestimonialCarousel />
                         </div>
                     </div>
                 </Reveal>
