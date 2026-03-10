@@ -6,7 +6,6 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   // Base path for GitHub Pages project site: https://itsshubhamkk.github.io/mydentalstory/
-  base: '/mydentalstory/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
