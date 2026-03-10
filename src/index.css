@@ -363,6 +363,37 @@ a {
   box-shadow: 0 8px 28px rgba(10, 110, 72, 0.55);
 }
 
+/* Mobile View Phone 8 */
+
+/* Show phone link only on mobile */
+.mobile-phone-link {
+  display: none;
+}
+
+/* Mobile view (screens < 768px) */
+@media (max-width: 767px) {
+  .mobile-phone-link {
+    display: inline-block;
+
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-phone-link .phone-icon {
+    margin-right: 8px;
+  }
+}
+
+/* Hide on desktop */
+@media (min-width: 768px) {
+  .mobile-phone-link {
+    display: none;
+  }
+}
+
 /* =============================================
    BUTTONS
    ============================================= */

@@ -235,6 +235,11 @@ export default function HomePage({ onBooking }: { onBooking: () => void }) {
                                 </a>
                             </div>
 
+                            <a href="tel:+919797252597" className="mobile-phone-link">
+                                <span className="phone-icon">📞</span>
+                                +91 79727 52597
+                            </a>
+
                             {/* Trust chips */}
                             <div className="anim-fade-up d-500 flex flex-wrap gap-2 mt-6 relative z-20">
                                 {['✓ Painless Procedures', '⏱ Open 9AM–9:30PM Daily'].map(c => (
